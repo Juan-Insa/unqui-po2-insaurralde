@@ -1,14 +1,13 @@
-package ar.edu.unq.po2.tp7.poquer2;
+package ar.edu.unq.po2.tp7.poquer3;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class PokerStatus {
-	
-	
-    public String verificar(String c1, String c2, String c3, String c4, String c5) {
-	    List<String> mano = new ArrayList<String>();
+public class PokerStatus {
+
+    public String verificar(ICarta c1, ICarta c2, ICarta c3, ICarta c4, ICarta c5) {
+	    List<ICarta> mano = new ArrayList<ICarta>();
 	    mano.add(c1);
 	    mano.add(c2);
 	    mano.add(c3);
@@ -18,7 +17,7 @@ class PokerStatus {
 	    return this.jugada(mano);
 	}
 
-    String jugada(List<String> mano) {
+    String jugada(List<ICarta> mano) {
 		if (this.esPoquer(mano)) {
 			return "Poquer";
 		}
@@ -33,8 +32,8 @@ class PokerStatus {
 		}
 	}
 
-	boolean esPoquer(List<String> mano) {
-		List<String> valores = this.valoresDeCartas(mano);
+	boolean esPoquer(List<ICarta> mano) {
+		List<Integer> valores = this.valoresDeCartas(mano);
 		
     	int iteracionesC1 = Collections.frequency(valores, valores.get(0));
     	int iteracionesC2 = Collections.frequency(valores, valores.get(1));
@@ -42,7 +41,7 @@ class PokerStatus {
 		return iteracionesC1 == 4 || iteracionesC2 == 4;
 	}
 
-    boolean esColor(List<String> mano) {
+    boolean esColor(List<ICarta> mano) {
 		List<String> colores = this.coloresDeCartas(mano);
 		
 		int iteracionesC1 = Collections.frequency(colores, colores.get(0));
@@ -50,8 +49,8 @@ class PokerStatus {
 		return iteracionesC1 == 5;
 	}
     
-    boolean esTrio(List<String> mano) {
-		List<String> valores = this.valoresDeCartas(mano);
+    boolean esTrio(List<ICarta> mano) {
+		List<Integer> valores = this.valoresDeCartas(mano);
 		
 		int iteracionesC1 = Collections.frequency(valores, valores.get(0));
     	int iteracionesC2 = Collections.frequency(valores, valores.get(1));
@@ -60,41 +59,20 @@ class PokerStatus {
 		return iteracionesC1 == 3 || iteracionesC2 == 3 || iteracionesC3 == 3;
 	}
 
-	List<String> coloresDeCartas(List<String> mano) {
+	List<String> coloresDeCartas(List<ICarta> mano) {
         List<String> colores = new ArrayList<String>();
-		for (String carta : mano) {
-			colores.add(this.colorCarta(carta));
+		for (ICarta carta : mano) {
+			colores.add(carta.getPalo());
 		}
-		
 		return colores;
 	}
-	
-	String colorCarta(String carta) {
-		if (carta.length() == 3) {
-			return carta.substring(2);
-		}
-		else {
-			return carta.substring(1);
-		}
-	}
 
-	List<String> valoresDeCartas(List<String> mano) {
-        List<String> valores = new ArrayList<String>();
-		for (String carta : mano) {
-			valores.add(this.valorCarta(carta));
+	List<Integer> valoresDeCartas(List<ICarta> mano) {
+        List<Integer> valores = new ArrayList<Integer>();
+		for (ICarta carta : mano) {
+			valores.add(carta.getValor());
 		}
-		
 		return valores;
-	}
-
-	String valorCarta(String c1) {
-		
-		if (c1.length() >= 3) {
-			return c1.substring(0, 2);
-		}
-		else {
-			return c1.substring(0, 1);
-		}
 	}
     	
 }

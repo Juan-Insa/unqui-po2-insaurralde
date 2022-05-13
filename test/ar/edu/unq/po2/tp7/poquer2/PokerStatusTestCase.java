@@ -37,7 +37,7 @@ class PokerStatusTestCase {
 	
 	@Test
 	void verificarQueLaManoEsColor() {
-		String jugada = ps.verificar("10D", "5D", "8D", "10C", "10D");
+		String jugada = ps.verificar("10D", "5D", "8D", "10D", "10D");
 		assertEquals("Color", jugada);
 	}
 	
