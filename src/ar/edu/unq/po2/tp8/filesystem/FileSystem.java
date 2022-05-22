@@ -1,5 +1,7 @@
 package ar.edu.unq.po2.tp8.filesystem;
 
+import java.time.LocalDateTime;
+
 public abstract class FileSystem implements FyleSystem{
 	private String name;
 
@@ -10,6 +12,7 @@ public abstract class FileSystem implements FyleSystem{
     public abstract void addFile(FileSystem file);
     public abstract void removeFile(FileSystem file);
     public abstract FileSystem getFile(int nbr);
+    public abstract LocalDateTime getLastModified();
     
     /*
      * dados dos archivos devuelve el más nuevo.

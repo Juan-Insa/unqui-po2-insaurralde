@@ -19,8 +19,17 @@ public class File extends FileSystem{
 	/*
 	 * getter de última modificacion
 	 */
-	LocalDateTime getLastModified() {
+	public LocalDateTime getLastModified() {
 		return lastModified;
+	}
+	
+	FileSystem newerAgainst(FileSystem f2) {
+		if (this.lastModified.isAfter(f2.getLastModified())) {
+			return this;
+		}
+		else{
+			return f2;
+		} 
 	}
 
 	/*

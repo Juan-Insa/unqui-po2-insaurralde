@@ -1,5 +1,6 @@
 package ar.edu.unq.po2.tp8.filesystem;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,29 +28,21 @@ public class Directory extends FileSystem{
 	 */
 	@Override
 	public FileSystem lastModified() {
-		List<File> files = this.getAllEndFiles();
+		List<FileSystem> files = this.getAllEndFiles();
 		if (! this.files.isEmpty()) {
 			FileSystem newestFile = files.get(0);
 		
 		for (FileSystem currentFile : files) {
-			newestFile = newestOf(newestFile, currentFile);
+			newestFile = newestFile.newerAgainst(currentFile);
 		}
 		return newestFile;
 		}
 	}
-	
-	FileSystem newestOf(FileSystem f1, FileSystem f2) {
-		if (f1.lastModified().isAfter){
-			
-		}
-			return null;
-	}
-
 
     /*
      * devuelve la lista de todos los archivos (sin directorios) del directorio
      */
-	private List<File> getAllEndFiles() {
+	private List<FileSystem> getAllEndFiles() {
 		List<FileSystem> files = new ArrayList<FileSystem>();
 		for (FileSystem fileS : this.files) {
 			if (fileS instanceof File) {
@@ -80,6 +73,11 @@ public class Directory extends FileSystem{
 	@Override
 	public FileSystem getFile(int nbr) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LocalDateTime getLastModified() {
 		return null;
 	}
 
