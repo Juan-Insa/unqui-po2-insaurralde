@@ -7,6 +7,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/*
+ * Esta version implementa un map con los investigadores junto sus intereses como suscriptores en vez de 
+ * una lista. De este modo la publicación no tiene que enviar el mensaje getTemasDeInteres a cada suscriptor.
+ * Solamente le manda mensaje al suscriptor para enviar el articulo nuevo que le interese.
+ */
+
 public class Publicacion implements Publicable{
     private List<IArticulo> articulos = new ArrayList<IArticulo>();
     private Map<InvestigadorObserver, List<String>> suscriptores = new HashMap<InvestigadorObserver, List<String>>();
