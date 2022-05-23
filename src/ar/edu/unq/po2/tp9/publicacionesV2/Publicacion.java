@@ -1,12 +1,15 @@
-package ar.edu.unq.po2.tp9.publicaciones;
+package ar.edu.unq.po2.tp9.publicacionesV2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class Publicacion implements Publicable{
     private List<IArticulo> articulos = new ArrayList<IArticulo>();
-    private List<InvestigadorObserver> suscriptores = new ArrayList<InvestigadorObserver>();
+    private Map<InvestigadorObserver, List<String>> suscriptores = new HashMap<InvestigadorObserver, List<String>>();
     
 	
     /*
@@ -14,16 +17,14 @@ public class Publicacion implements Publicable{
      */
 	@Override
 	public void notificar(IArticulo articulo) {
-	    for (InvestigadorObserver investigador : this.getSuscriptores()) {
-			this.notificarSiLeInteresa(investigador, articulo);
-		}
+	    this.suscriptores.forEach((investigador, intereses) -> this.notificarSiLeInteresa(investigador, intereses, articulo));
 	}
 
 	/*
 	 * le envía el articulo al investigador dado si le es de interes
 	 */
-	private void notificarSiLeInteresa(InvestigadorObserver investigador, IArticulo articulo) {
-		if (this.leInteresa(articulo, investigador)){
+	private void notificarSiLeInteresa(InvestigadorObserver investigador, List<String> intereses, IArticulo articulo) {
+		if (this.leInteresa(intereses, articulo)){
 			investigador.agregarArticulo(articulo);
 		}
 	}
@@ -33,8 +34,8 @@ public class Publicacion implements Publicable{
 	 * del investigador.
 	 */
 	@Override
-	public boolean leInteresa(IArticulo articulo, InvestigadorObserver investigador) {
-		Stream<String> temasDeInteres = investigador.temasDeInteres().stream(); 
+	public boolean leInteresa(List<String> intereses, IArticulo articulo) {
+		Stream<String> temasDeInteres = intereses.stream(); 
 	
 		return temasDeInteres.anyMatch(articulo.getPalabrasClave()::contains);
 	}
@@ -50,8 +51,8 @@ public class Publicacion implements Publicable{
 	}
 	
 	@Override
-	public void agregarInvestigador(InvestigadorObserver investigador) {
-		this.suscriptores.add(investigador);
+	public void agregarInvestigador(InvestigadorObserver investigador, List<String> temasDeInteres) {
+		this.suscriptores.put(investigador, temasDeInteres);
 	}
 
 	@Override
@@ -59,8 +60,8 @@ public class Publicacion implements Publicable{
 		this.suscriptores.remove(investigador);
 	}
 
-	List<InvestigadorObserver> getSuscriptores() {
-		return suscriptores;
+	Set<InvestigadorObserver> getSuscriptores() {
+		return this.suscriptores.keySet();
 	}
 	
 }

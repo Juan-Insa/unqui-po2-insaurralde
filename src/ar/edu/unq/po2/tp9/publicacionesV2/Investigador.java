@@ -1,4 +1,4 @@
-package ar.edu.unq.po2.tp9.publicaciones;
+package ar.edu.unq.po2.tp9.publicacionesV2;
 
 import java.util.List;
 
@@ -22,8 +22,9 @@ public class Investigador implements InvestigadorObserver {
 	}
 
 	@Override
-	public void suscribirse(Publicable publicacion) {
-		publicacion.agregarInvestigador(this);
+	public void suscribirse(Publicable publicacion, List<String> temasDeInteres) {
+		publicacion.agregarInvestigador(this, temasDeInteres);
+		
 	}
     
 }
