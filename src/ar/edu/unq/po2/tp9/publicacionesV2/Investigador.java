@@ -23,7 +23,7 @@ public class Investigador implements InvestigadorObserver {
 
 	@Override
 	public void suscribirse(Publicable publicacion, List<String> temasDeInteres) {
-		publicacion.agregarInvestigador(this, temasDeInteres);
+		publicacion.agregarInvestigador(this, this.temasDeInteres);
 		
 	}
     
